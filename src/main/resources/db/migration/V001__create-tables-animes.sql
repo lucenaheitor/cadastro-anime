@@ -1,8 +1,0 @@
-CREATE TABLE animes (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    email VARCHAR(255),
-    anime VARCHAR(255),
-    autor VARCHAR(255),
-    genero ENUM('SHOUNNEN', 'ECCHI', 'COMEDIA', 'HENTAI', 'SEINEN', 'ROMANCE') NOT NULL
-);

@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Table(name = "animes")
-@Entity(name = "anime")
+@Entity(name = "Anime")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Anime {
 
     @Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
