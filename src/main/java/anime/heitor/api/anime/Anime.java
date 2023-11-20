@@ -30,4 +30,17 @@ public class Anime {
 
 
     }
+
+
+    public void atualizarInforamacoes(AtualizarAnimesDTO dados) {
+        if (dados.anime() != null){
+            this.anime = dados.anime();
+        }
+        if (dados.autor() != null){
+            this.autor = dados.autor();
+        }
+        if (dados.genero() != null){
+            this.genero = dados.genero();
+        }
+    }
 }

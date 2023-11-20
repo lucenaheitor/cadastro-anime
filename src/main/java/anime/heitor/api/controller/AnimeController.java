@@ -1,11 +1,7 @@
 package anime.heitor.api.controller
         ;
 
-import anime.heitor.api.anime.Anime;
-import anime.heitor.api.anime.AnimeRepository;
-import anime.heitor.api.anime.CadastrarAnimesFvoritos;
-
-import anime.heitor.api.anime.DadosListagemAnimes;
+import anime.heitor.api.anime.*;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -39,8 +35,23 @@ public class AnimeController {
 //Abordagem mais simples pra fim de estudo,  devolvendo toda a entidade pois é simples
     @GetMapping
     public List<Anime> listar(){
+
         return  repository.findAll();
     }
 
+    @PutMapping
+    @Transactional
+    public void atualizar(@RequestBody @Valid AtualizarAnimesDTO dados){
+        var anime =  repository.getReferenceById(dados.id());
+        anime.atualizarInforamacoes(dados);
+
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void delete(@PathVariable Long id){
+        repository.deleteById(id);
+
+    }
 
 }
