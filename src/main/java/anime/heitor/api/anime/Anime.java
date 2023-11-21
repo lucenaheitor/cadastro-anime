@@ -1,5 +1,7 @@
 package anime.heitor.api.anime;
 
+import anime.heitor.api.DTO.AtualizarAnimesDTO;
+import anime.heitor.api.DTO.CadastrarAnimesDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,7 +23,7 @@ public class Anime {
     private Genero genero;
 
 
-    public Anime(CadastrarAnimesFvoritos dados) {
+    public Anime(CadastrarAnimesDTO dados) {
         this.nome = dados.nome();
         this.email = dados.email();
         this.anime = dados.anime();
@@ -32,7 +34,7 @@ public class Anime {
     }
 
 
-    public void atualizarInforamacoes(AtualizarAnimesDTO dados) {
+    public void atualizarInformacoes(AtualizarAnimesDTO dados) {
         if (dados.anime() != null){
             this.anime = dados.anime();
         }
@@ -42,5 +44,13 @@ public class Anime {
         if (dados.genero() != null){
             this.genero = dados.genero();
         }
+    }
+
+    public static record DadosListagemAnimes(Long id, String nome, String  email, String anime, String autor, Genero genero) {
+
+        public  DadosListagemAnimes(Anime anime){
+            this(anime.getId(), anime.getNome(), anime.getEmail(), anime.getAnime(), anime.getAutor(), anime.getGenero());
+        }
+
     }
 }

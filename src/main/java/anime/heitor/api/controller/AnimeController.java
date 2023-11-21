@@ -1,17 +1,21 @@
 package anime.heitor.api.controller
         ;
 
+import anime.heitor.api.DTO.AtualizarAnimesDTO;
+import anime.heitor.api.DTO.CadastrarAnimesDTO;
 import anime.heitor.api.anime.*;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("animes")
@@ -22,36 +26,44 @@ public class AnimeController {
 
     @PostMapping
     @Transactional
-    public void  CadastroAnimes(@RequestBody @Valid CadastrarAnimesFvoritos dados){
-        repository.save(new Anime(dados));
-    }
-    //Abordagem correta com  um DTO pra ter  felixibilidade e devolver aqui q vc quer ao inves de  devolver toda a entidade.
-    //Usando o page pra devolver uma pagina configurado com 10 itens por  pagina
-//    @GetMapping
-//    public Page<DadosListagemAnimes> listar(Pageable paginacao){
-//        return repository.findAll(paginacao).map(DadosListagemAnimes::new);
-//    }
+    public ResponseEntity cadastrarAnime(@RequestBody @Valid CadastrarAnimesDTO dados, UriComponentsBuilder uriBuilder) {
+        Anime anime = repository.save(new Anime(dados));
 
-//Abordagem mais simples pra fim de estudo,  devolvendo toda a entidade pois é simples
+        URI uri = uriBuilder.path("/animes/{id}").buildAndExpand(anime.getId()).toUri();
+        return ResponseEntity.created(uri).build();
+    }
+
     @GetMapping
-    public List<Anime> listar(){
-
-        return  repository.findAll();
+    public ResponseEntity<List<Anime>> listar() {
+        List<Anime> animes = repository.findAll();
+        return ResponseEntity.ok(animes);
     }
 
-    @PutMapping
-    @Transactional
-    public void atualizar(@RequestBody @Valid AtualizarAnimesDTO dados){
-        var anime =  repository.getReferenceById(dados.id());
-        anime.atualizarInforamacoes(dados);
+    @GetMapping("/{id}")
+    public ResponseEntity<Anime> listarAnimes(@PathVariable Long id) {
+        Optional<Anime> animeOptional = repository.findById(id);
+        return animeOptional.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
 
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Anime> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizarAnimesDTO dados) {
+        Optional<Anime> animeOptional = repository.findById(id);
+
+        if (animeOptional.isPresent()) {
+            Anime anime = animeOptional.get();
+            anime.atualizarInformacoes(dados);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public void delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         repository.deleteById(id);
-
+        return ResponseEntity.noContent().build();
     }
 
 }
