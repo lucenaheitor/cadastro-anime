@@ -1,4 +1,4 @@
-package anime.heitor.api.anime;
+package anime.heitor.api.domain.anime;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

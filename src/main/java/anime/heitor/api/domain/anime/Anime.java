@@ -1,7 +1,7 @@
-package anime.heitor.api.anime;
+package anime.heitor.api.domain.anime;
 
-import anime.heitor.api.DTO.AtualizarAnimesDTO;
-import anime.heitor.api.DTO.CadastrarAnimesDTO;
+import anime.heitor.api.domain.DTO.AtualizarAnimesDTO;
+import anime.heitor.api.domain.DTO.CadastrarAnimesDTO;
 import jakarta.persistence.*;
 import lombok.*;
 

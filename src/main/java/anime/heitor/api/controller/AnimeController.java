@@ -1,10 +1,12 @@
 package anime.heitor.api.controller
         ;
 
-import anime.heitor.api.DTO.AtualizarAnimesDTO;
-import anime.heitor.api.DTO.CadastrarAnimesDTO;
-import anime.heitor.api.anime.*;
+import anime.heitor.api.domain.DTO.AtualizarAnimesDTO;
+import anime.heitor.api.domain.DTO.CadastrarAnimesDTO;
 
+
+import anime.heitor.api.domain.anime.Anime;
+import anime.heitor.api.domain.anime.AnimeRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
@@ -22,7 +24,7 @@ import java.util.Optional;
 public class AnimeController {
 
     @Autowired
-    private AnimeRepository  repository;
+    private AnimeRepository repository;
 
     @PostMapping
     @Transactional

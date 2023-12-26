@@ -1,7 +1,7 @@
-package anime.heitor.api.DTO;
+package anime.heitor.api.domain.DTO;
 
 
-import anime.heitor.api.anime.Genero;
+import anime.heitor.api.domain.anime.Genero;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
