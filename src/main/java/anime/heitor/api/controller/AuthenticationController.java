@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping
 public class AuthenticationController {
-
+    @Autowired
     private UsuarioRepository repository;
 
     @Autowired
@@ -35,6 +35,7 @@ public class AuthenticationController {
         var userNamePassword =  new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth =  this.authenticationManager.authenticate(userNamePassword);
         var tokenJWT = tokenService.gerarToken((Usuario) auth.getPrincipal());
+
 
 
         return  ResponseEntity.ok(new DataTokenJWT(tokenJWT));
